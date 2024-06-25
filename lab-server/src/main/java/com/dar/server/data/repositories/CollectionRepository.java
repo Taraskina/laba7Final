@@ -1,10 +1,11 @@
 package com.dar.server.data.repositories;
 
-import com.dar.server.data.entities.SpaceMarineEntity;
+import com.dar.server.data.entities.PersonEntity;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.stream.Stream;
 
@@ -13,13 +14,13 @@ import java.util.stream.Stream;
  */
 @Repository
 public class CollectionRepository {
-    SpaceMarineRepository spaceMarineRepository;
+    PersonRepository spaceMarineRepository;
 
 
-    private final PriorityQueue<SpaceMarineEntity> collection;
+    private final HashSet<PersonEntity> collection;
 
     @Autowired
-    public CollectionRepository(PriorityQueue<SpaceMarineEntity> collection,SpaceMarineRepository spaceMarineRepository) {
+    public CollectionRepository(HashSet<PersonEntity> collection, PersonRepository spaceMarineRepository) {
         this.collection = collection;
         this.spaceMarineRepository =spaceMarineRepository;
     }
@@ -29,23 +30,16 @@ public class CollectionRepository {
         this.collection.addAll(spaceMarineRepository.getAll());
     }
 
-    public SpaceMarineEntity poll() {
-        return collection.poll();
-    }
 
-    public SpaceMarineEntity peek() {
-        return collection.peek();
-    }
-
-    public void add(SpaceMarineEntity spm) {
+    public void add(PersonEntity spm) {
         collection.add(spm);
     }
 
-    public void remove(SpaceMarineEntity spm) {
+    public void remove(PersonEntity spm) {
         collection.remove(spm);
     }
 
-    public Stream<SpaceMarineEntity> getCollectionStream() {
+    public Stream<PersonEntity> getCollectionStream() {
         return collection.stream();
 
     }

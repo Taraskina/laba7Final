@@ -1,8 +1,7 @@
 package com.dar.server;
 
 import com.dar.server.commands.*;
-import com.dar.server.commands.*;
-import com.dar.server.data.entities.SpaceMarineEntity;
+import com.dar.server.data.entities.PersonEntity;
 import com.dar.server.util.ServerCommand;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -23,7 +22,7 @@ import java.util.stream.Stream;
 
 @PropertySource("classpath:application.properties")
 @Configuration
-@ComponentScan("com.alexkekiy.server")
+@ComponentScan("com.dar.server")
 public class SpringConfig {
     @Bean
     ServerSocketChannel serverSocketChannel() throws IOException {
@@ -36,7 +35,7 @@ public class SpringConfig {
     }
 
     @Bean
-    PriorityQueue<SpaceMarineEntity> spaceMarineEntityPriorityQueue() {
+    PriorityQueue<PersonEntity> spaceMarineEntityPriorityQueue() {
         return new PriorityQueue<>();
     }
 

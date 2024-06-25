@@ -1,10 +1,10 @@
 package com.dar.server;
 
 
-import com.dar.common.exceptions.MessageWasNotReadedSuccessfull;
-import com.dar.common.utilites.JsonSerializer;
 import com.dar.common.data.Request;
 import com.dar.common.data.Response;
+import com.dar.common.exceptions.MessageWasNotReadedSuccessfull;
+import com.dar.common.utilites.JsonSerializer;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.io.IOException;

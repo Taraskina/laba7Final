@@ -11,7 +11,7 @@ import com.dar.common.utilites.CommandType;
 import com.dar.server.data.entities.AccountEntity;
 import com.dar.server.data.repositories.CollectionRepository;
 import com.dar.server.data.repositories.ServerAccountRepository;
-import com.dar.server.data.repositories.SpaceMarineRepository;
+import com.dar.server.data.repositories.PersonRepository;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,13 +33,13 @@ public class ServerCommand implements Executable {
     private String name = "command";
     private CollectionRepository collectionRepository;
     private ServerAccountRepository serverAccountRepository;
-    private SpaceMarineRepository spaceMarineRepository;
+    private PersonRepository spaceMarineRepository;
 
     public ServerCommand() {
     }
 
 
-    public Response execute(CollectionRepository collectionRepository, ServerAccountRepository serverAccountRepository, SpaceMarineRepository spaceMarineRepository) {
+    public Response execute(CollectionRepository collectionRepository, ServerAccountRepository serverAccountRepository, PersonRepository spaceMarineRepository) {
         this.collectionRepository = collectionRepository;
         this.serverAccountRepository = serverAccountRepository;
         this.spaceMarineRepository = spaceMarineRepository;

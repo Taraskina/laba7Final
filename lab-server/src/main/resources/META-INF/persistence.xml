@@ -7,7 +7,7 @@
 
     <persistence-unit name="alexkekiy">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>com.dar.server.data.entities.SpaceMarineEntity</class>
+        <class>com.dar.server.data.entities.PersonEntity</class>
         <class>com.dar.server.data.entities.ChapterEntity</class>
         <class>com.dar.server.data.entities.CoordinatesEntity</class>
         <class>com.dar.server.data.entities.AccountEntity</class>
@@ -24,7 +24,7 @@
     </persistence-unit>
     <persistence-unit name="local">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>com.dar.server.data.entities.SpaceMarineEntity</class>
+        <class>com.dar.server.data.entities.PersonEntity</class>
         <class>com.dar.server.data.entities.ChapterEntity</class>
         <class>com.dar.server.data.entities.CoordinatesEntity</class>
         <class>com.dar.server.data.entities.AccountEntity</class>

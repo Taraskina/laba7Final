@@ -12,14 +12,18 @@ import java.util.Objects;
 @Getter
 @Entity
 @DynamicInsert
-@Table(name = "coordinates")
-public class CoordinatesEntity {
+@Table(name = "location")
+public class LocationEntity {
     @Column
     @NotNull
-    private Long x; //Максимальное значение поля: 625, Поле не может быть null
+    private long x; //Максимальное значение поля: 625, Поле не может быть null
     @Column
     @NotNull
-    private Long y; //Значение поля должно быть больше -354, Поле не может быть null
+    private Long y;//Значение поля должно быть больше -354, Поле не может быть null
+    @Column
+    @NotNull
+    private float z;
+
     @Setter
     @Id
     @Column(name = "id")
@@ -28,28 +32,30 @@ public class CoordinatesEntity {
 
     private Long id;
 
-    public CoordinatesEntity(Long x, Long y) {
+    public LocationEntity(long x, Long y, float z) {
         this.setX(x);
         this.setY(y);
+        this.setZ(z);
         //this.id = DBConnection.getDBConnection().newId();
     }
 
-    public CoordinatesEntity() {
+    public LocationEntity() {
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CoordinatesEntity that)) return false;
-        return Objects.equals(x, that.x) && Objects.equals(y, that.y) && Objects.equals(id, that.id);
+        if (o == null || getClass() != o.getClass()) return false;
+        LocationEntity that = (LocationEntity) o;
+        return x == that.x && Float.compare(z, that.z) == 0 && Objects.equals(y, that.y) && Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y, id);
+        return Objects.hash(x, y, z, id);
     }
 
-    public void setX(Long x) {
+    public void setX(long x) {
         if (x >= 625L) {
             throw new IncorrectDataInput();
         }
@@ -64,9 +70,12 @@ public class CoordinatesEntity {
 
     }
 
+    public void setZ(float z) {
+        this.z = z;
+    }
+
     @Override
     public String toString() {
         return x + "," + y;
     }
-
 }

@@ -1,9 +1,10 @@
 package test;
 
-import com.dar.server.data.entities.ChapterEntity;
-import com.dar.server.data.entities.CoordinatesEntity;
-import com.dar.server.data.entities.SpaceMarineEntity;
+
 import com.dar.server.data.entities.Color;
+import com.dar.server.data.entities.CoordinatesEntity;
+import com.dar.server.data.entities.LocationEntity;
+import com.dar.server.data.entities.PersonEntity;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +28,7 @@ public class AppTest {
 
     @Test
     public void shouldPersistSpaceMarine() {
-        SpaceMarineEntity spm = new SpaceMarineEntity("sp", new CoordinatesEntity(1L, 0.0f), 3L, true, 5f, Color.COMBI_PLASMA_GUN, new ChapterEntity("biba", "boba"));
+        PersonEntity spm = new PersonEntity("sp", new CoordinatesEntity(1L, 0L), 3L,  5f, Color.RED, new LocationEntity(1, 1L, 1));
         em.persist(spm);
         assertTrue(em.contains(spm));
         em.detach(spm);

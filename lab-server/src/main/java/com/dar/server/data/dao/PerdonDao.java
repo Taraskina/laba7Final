@@ -1,6 +1,6 @@
 package com.dar.server.data.dao;
 
-import com.dar.server.data.entities.SpaceMarineEntity;
+import com.dar.server.data.entities.PersonEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -8,59 +8,60 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Component
-public class SpaceMarineDao implements Dao<SpaceMarineEntity> {
+public class PerdonDao implements Dao<PersonEntity> {
     private final EntityManager entityManager;
     private final CriteriaBuilder criteriaBuilder;
-    private final CriteriaQuery<SpaceMarineEntity> query;
-    private final Root<SpaceMarineEntity> root;
+    private final CriteriaQuery<PersonEntity> query;
+    private final Root<PersonEntity> root;
 
     @Autowired
-    public SpaceMarineDao(EntityManager entityManager) {
+    public PerdonDao(EntityManager entityManager) {
         this.entityManager = entityManager;
 
         criteriaBuilder = entityManager.getCriteriaBuilder();
-        query = criteriaBuilder.createQuery(SpaceMarineEntity.class);
-        root = query.from(SpaceMarineEntity.class);
+        query = criteriaBuilder.createQuery(PersonEntity.class);
+        root = query.from(PersonEntity.class);
 
     }
 
-    public List<SpaceMarineEntity> getAllByUserId(long userId) {
+    public Set<PersonEntity> getAllByUserId(long userId) {
         try {
-            return entityManager.createQuery(query.where(criteriaBuilder.equal(root.get("user_id"), userId))).getResultList();
+            List<PersonEntity> result = entityManager.createQuery(query.where(criteriaBuilder.equal(root.get("user_id"), userId))).getResultList();
+            return new HashSet<>(result);
         } catch (Exception e) {
-            return List.of();
+            return Collections.emptySet();
         }
     }
 
-    public List<SpaceMarineEntity> getAll() {
+    public Set<PersonEntity> getAll() {
         try {
             query.select(root);
-            return entityManager.createQuery(query).getResultList();
+            List<PersonEntity> result = entityManager.createQuery(query).getResultList();
+            return new HashSet<>(result);
         } catch (Exception e) {
-            return List.of();
+            return Collections.emptySet();
         }
     }
 
     @Override
-    public void save(SpaceMarineEntity spm) {
-        entityManager.persist(spm);
+    public void save(PersonEntity person) {
+        entityManager.persist(person);
         entityManager.flush();
     }
 
     @Override
-    public Optional<SpaceMarineEntity> get(long id) {
+    public Optional<PersonEntity> get(long id) {
         entityManager.flush();
-        Optional<SpaceMarineEntity> spm;
+        Optional<PersonEntity> person;
         try {
-            spm = Optional.of(entityManager.find(SpaceMarineEntity.class, id));
+            person = Optional.of(entityManager.find(PersonEntity.class, id));
         } catch (Exception e) {
-            spm = Optional.empty();
+            person = Optional.empty();
         }
-        return spm;
+        return person;
     }
 
     @Override
@@ -86,15 +87,15 @@ public class SpaceMarineDao implements Dao<SpaceMarineEntity> {
     }
 
     @Override
-    public void delete(SpaceMarineEntity spm) {
-        entityManager.remove(spm);
+    public void delete(PersonEntity person) {
+        entityManager.remove(person);
         entityManager.flush();
     }
 
     @Override
-    public void update(SpaceMarineEntity spm) {
+    public void update(PersonEntity person) {
         entityManager.flush();
-        entityManager.merge(spm);
+        entityManager.merge(person);
         entityManager.flush();
     }
 }

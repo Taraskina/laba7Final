@@ -27,10 +27,10 @@ import static java.time.LocalDateTime.now;
 /**
  * основной хранимый entity-дата-класс
  */
-public class SpaceMarineEntity implements Comparable<SpaceMarineEntity>, Serializable {
+public class PersonEntity implements Comparable<PersonEntity>, Serializable {
 
     /**
-     * id {@link SpaceMarineEntity}Значение поля должно быть больше 0,
+     * id {@link PersonEntity}Значение поля должно быть больше 0,
      * Значение этого поля должно быть уникальным,
      * Значение этого поля должно генерироваться автоматически
      */
@@ -45,7 +45,7 @@ public class SpaceMarineEntity implements Comparable<SpaceMarineEntity>, Seriali
     private AccountEntity owner;
 
     /**
-     * Имя {@link SpaceMarineEntity}.
+     * Имя {@link PersonEntity}.
      * Поле не может быть null и не может быть пустым.
      */
     @Column(name = "name")
@@ -53,7 +53,7 @@ public class SpaceMarineEntity implements Comparable<SpaceMarineEntity>, Seriali
     private String name;
 
     /**
-     * Координаты {@link SpaceMarineEntity}.
+     * Координаты {@link PersonEntity}.
      * Поле не может быть null.
      */
     @OneToOne
@@ -63,7 +63,7 @@ public class SpaceMarineEntity implements Comparable<SpaceMarineEntity>, Seriali
     private CoordinatesEntity coordinatesEntity;
 
     /**
-     * Дата создания {@link SpaceMarineEntity}.
+     * Дата создания {@link PersonEntity}.
      * Поле не может быть null и его значение должно генерироваться автоматически.
      * Формат даты: "dd-MM-yyyy HH:mm"
      */
@@ -72,125 +72,107 @@ public class SpaceMarineEntity implements Comparable<SpaceMarineEntity>, Seriali
     private LocalDateTime creationDate;
 
     /**
-     * Уровень здоровья {@link SpaceMarineEntity}.
+     * Уровень здоровья {@link PersonEntity}.
      * Значение поля должно быть больше 0.
      */
     @Column(name = "health")
-    private long health;
+    private long weight;
 
     /**
-     * Флаг лояльности {@link SpaceMarineEntity}.
-     * Поле может быть null.
-     */
-    @NotNull
-    @Column
-    private Boolean loyal;
-
-    /**
-     * Рост {@link SpaceMarineEntity}.
+     * Рост {@link PersonEntity}.
      */
     @Column
     private float height;
 
     /**
-     * Вид оружия {@link SpaceMarineEntity}.
+     * Вид оружия {@link PersonEntity}.
      * Поле может быть null.
      */
     @Column
     @NotNull
-    private Color weaponType;
+    private Color color;
 
     /**
-     * Глава {@link SpaceMarineEntity}.
+     * Локация {@link PersonEntity}.
      * Поле не может быть null.
      */
-
     @OneToOne
-    @JoinColumn(name = "Chapter_id", referencedColumnName = "id")
+    @JoinColumn(name = "Location_id", referencedColumnName = "id")
     @Cascade(CascadeType.ALL)
     @NotNull
-    private ChapterEntity chapterEntity;
+    private LocationEntity locationEntity;
 
-    SpaceMarineEntity(AccountEntity acc, java.lang.String name, CoordinatesEntity coordinatesEntity, java.time.LocalDateTime creationDate, long health, java.lang.Boolean loyal, float height, Color weaponType, ChapterEntity chapterEntity) {
-        this.health = health;
-        this.chapterEntity = chapterEntity;
-        this.loyal = loyal;
+    PersonEntity(AccountEntity acc, java.lang.String name, CoordinatesEntity coordinatesEntity, java.time.LocalDateTime creationDate, long weight, float height, Color color, LocationEntity locationEntity) {
+        this.weight = weight;
         this.coordinatesEntity = coordinatesEntity;
         this.owner = acc;
-        this.weaponType = weaponType;
+        this.color = color;
         this.name = name;
         this.height = height;
+        this.locationEntity = locationEntity;
         this.creationDate = now();
-
-
     }
 
-    SpaceMarineEntity(long id, AccountEntity owner, String name, CoordinatesEntity coordinatesEntity, LocalDateTime localDateTime, long health, Boolean loyal, float height, Color weaponType, ChapterEntity chapterEntity) {
-
-
+    PersonEntity(long id, AccountEntity owner, String name, CoordinatesEntity coordinatesEntity, LocalDateTime localDateTime, long health, Boolean loyal, float height, Color weaponType, LocationEntity locationEntity) {
         this.id = id;
-        this.health = health;
-        this.chapterEntity = chapterEntity;
-        this.loyal = loyal;
+        this.weight = health;
+        this.locationEntity = locationEntity;
         this.coordinatesEntity = coordinatesEntity;
         this.owner = owner;
-        this.weaponType = weaponType;
+        this.color = weaponType;
         this.name = name;
         this.height = height;
         this.creationDate = localDateTime;
-
-
     }
 
-    public SpaceMarineEntity(String n, CoordinatesEntity c, long h, Boolean l, float height, Color gun, ChapterEntity ch) {
+    public PersonEntity(String n, CoordinatesEntity c, long h, float height, Color gun, LocationEntity ch) {
         super();
         this.name = n;
-        this.health = h;
+        this.weight = h;
         this.coordinatesEntity = c;
-        this.loyal = l;
-        this.weaponType = gun;
-        this.chapterEntity = ch;
+        this.color = gun;
+        this.locationEntity = ch;
         this.height = height;
     }
 
-    public SpaceMarineEntity() {
+    public PersonEntity() {
         this.creationDate = now();
     }
 
-    public static SpaceMarineEntity newInstance(String[] args) {
+    public static PersonEntity newInstance(String[] args) {
 
 
-        SpaceMarineEntityBuilder spmBuilder = SpaceMarineEntity.builder();
+        PersonEntityBuilder spmBuilder = PersonEntity.builder();
         spmBuilder.name = ((String) readValidType("s", args[0]));
         spmBuilder.coordinatesEntity = (new CoordinatesEntity(
                 (Long) readValidType("l", args[1]),
-                (Float) readValidType("f", args[2])));
+                (Long) readValidType("l", args[2])));
 
-        spmBuilder.health = ((Long) readValidType("l", args[3]));
-        spmBuilder.loyal = ((Boolean) readValidType("b", args[4]));
-        spmBuilder.height = ((Float) readValidType("f", args[5]));
-        spmBuilder.weaponType = (Color.choose((String) readValidType("s", args[6])));
-        spmBuilder.chapterEntity = (new ChapterEntity(
-                (String) readValidType("s", args[7]),
-                (String) readValidType("s", args[8])));
+        spmBuilder.weight = ((Long) readValidType("l", args[3]));
+        spmBuilder.height = ((Float) readValidType("f", args[4]));
+        spmBuilder.color = (Color.choose((String) readValidType("s", args[5])));
+        spmBuilder.locationEntity = (new LocationEntity(
+                (long) readValidType("l", args[6]),
+                (Long) readValidType("l", args[7]),
+                (float) readValidType("f", args[8])));
         //spmBuilder.id = Math.toIntExact(DBConnection.getDBConnection().newId());
         return spmBuilder.build();
     }
 
-    public SpaceMarineEntity update(String[] args) {
+    public PersonEntity update(String[] args) {
         return newInstance(args);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SpaceMarineEntity that)) return false;
-        return id == that.id && health == that.health && Float.compare(height, that.height) == 0 && Objects.equals(name, that.name) && Objects.equals(coordinatesEntity, that.coordinatesEntity) && Objects.equals(creationDate, that.creationDate) && Objects.equals(loyal, that.loyal) && weaponType == that.weaponType && Objects.equals(chapterEntity, that.chapterEntity);
+        if (!(o instanceof PersonEntity that)) return false;
+        return id == that.id && weight == that.weight && Float.compare(height, that.height) == 0 && Objects.equals(name, that.name) && Objects.equals(coordinatesEntity, that.coordinatesEntity) && Objects.equals(creationDate, that.creationDate)  && color == that.color && Objects.equals(locationEntity, that.locationEntity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, coordinatesEntity, creationDate, health, loyal, height, weaponType, chapterEntity);
+        return Objects.hash(id, name, coordinatesEntity, creationDate, weight, height, color, locationEntity);
     }
 
     @Override
@@ -199,18 +181,17 @@ public class SpaceMarineEntity implements Comparable<SpaceMarineEntity>, Seriali
         return "***** " + this.getClass() + " Details *****\n" +
                 "ID=" + getId() + "\n" +
                 "Name=" + getName() + "\n" +
-                "health=" + getHealth() + "\n" +
+                "health=" + getWeight() + "\n" +
                 "Coordinates=" + getCoordinatesEntity() + "\n" +
-                "loyal=" + getLoyal() + "\n" +
-                "chapter=" + getChapterEntity() + "\n" +
-                "weapoonType=" + getWeaponType() + "\n" +
+                "chapter=" + getLocationEntity() + "\n" +
+                "weapoonType=" + getColor() + "\n" +
                 "height=" + getHeight() + "\n" +
                 "creationDate=" + getCreationDate() + "\n" +
                 "*****************************";
     }
 
     @Override
-    public int compareTo(SpaceMarineEntity other) {
+    public int compareTo(PersonEntity other) {
         return this.name.compareTo(other.name);
     }
 

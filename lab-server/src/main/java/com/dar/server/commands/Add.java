@@ -3,7 +3,7 @@ package com.dar.server.commands;
 import com.dar.common.data.Executable;
 import com.dar.common.data.Response;
 import com.dar.common.utilites.CommandType;
-import com.dar.server.data.entities.SpaceMarineEntity;
+import com.dar.server.data.entities.PersonEntity;
 import com.dar.server.util.ServerCommand;
 
 public class Add extends ServerCommand implements Executable {
@@ -21,7 +21,7 @@ public class Add extends ServerCommand implements Executable {
         return inst;
     }
 
-    public Response calling( SpaceMarineEntity spm) {
+    public Response calling( PersonEntity spm) {
         Response resp = super.calling();
         spm.setOwner(getUser());
         getCollectionRepository().add(spm);
@@ -32,7 +32,7 @@ public class Add extends ServerCommand implements Executable {
 
     @Override
     public Response calling() {
-        SpaceMarineEntity spm = SpaceMarineEntity.newInstance(getArgs());
+        PersonEntity spm = PersonEntity.newInstance(getArgs());
         return this.calling( spm);
     }
 }

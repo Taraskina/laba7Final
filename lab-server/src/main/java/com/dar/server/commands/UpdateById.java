@@ -4,7 +4,7 @@ package com.dar.server.commands;
 import com.dar.common.data.Executable;
 import com.dar.common.data.Response;
 import com.dar.common.utilites.CommandType;
-import com.dar.server.data.entities.SpaceMarineEntity;
+import com.dar.server.data.entities.PersonEntity;
 import com.dar.server.util.ServerCommand;
 
 public class UpdateById extends ServerCommand implements Executable {
@@ -30,7 +30,7 @@ public class UpdateById extends ServerCommand implements Executable {
         if (getCollectionRepository().getCollectionStream().anyMatch(w -> String.valueOf(w.getId()).equals(this.getValue()))) {
             getCollectionRepository().getCollectionStream().filter(w -> String.valueOf(w.getId()).equals(this.getValue())).forEach(w -> {
                 if (w.getOwner().equals(getUser())) {
-                    SpaceMarineEntity spm = getCollectionRepository().getCollectionStream().filter(x -> x.getId() == Integer.parseInt(this.getValue())).findFirst().get();
+                    PersonEntity spm = getCollectionRepository().getCollectionStream().filter(x -> x.getId() == Integer.parseInt(this.getValue())).findFirst().get();
                     spm.update(this.getArgs());
                     getSpaceMarineRepository().update(spm);
                     resp.addMessage("Объект успешно обновлен");

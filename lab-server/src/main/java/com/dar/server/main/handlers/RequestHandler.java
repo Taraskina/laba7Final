@@ -5,7 +5,7 @@ import com.dar.common.data.Response;
 import com.dar.common.exceptions.NoAccountFounded;
 import com.dar.server.data.repositories.CollectionRepository;
 import com.dar.server.data.repositories.ServerAccountRepository;
-import com.dar.server.data.repositories.SpaceMarineRepository;
+import com.dar.server.data.repositories.PersonRepository;
 import com.dar.server.exceptions.InvalidPassword;
 import com.dar.server.main.ClientConnector;
 import com.dar.server.main.services.CommandExtractorService;
@@ -29,16 +29,16 @@ public class RequestHandler implements Callable<Optional<Response>> {
     private final Request request;
     private final ClientConnector connector;
     private final ServerAccountRepository serverAccountRepository;
-    private final SpaceMarineRepository spaceMarineRepository;
+    private final PersonRepository personRepository;
     private final CollectionRepository collectionRepository;
     private final CommandExtractorService commandExtractorService;
 
 
-    public RequestHandler(@NotNull Request request, ClientConnector connector, CollectionRepository collectionRepository, ServerAccountRepository serverAccountRepository, SpaceMarineRepository spaceMarineRepository, CommandExtractorService commandExtractorService) {
+    public RequestHandler(@NotNull Request request, ClientConnector connector, CollectionRepository collectionRepository, ServerAccountRepository serverAccountRepository, PersonRepository personRepository, CommandExtractorService commandExtractorService) {
         this.connector = connector;
         this.request = request;
         this.serverAccountRepository = serverAccountRepository;
-        this.spaceMarineRepository = spaceMarineRepository;
+        this.personRepository = personRepository;
         this.collectionRepository = collectionRepository;
         this.commandExtractorService = commandExtractorService;
     }
@@ -75,6 +75,6 @@ public class RequestHandler implements Callable<Optional<Response>> {
     }
 
     public Response executeCommand(ServerCommand command) {
-        return command.execute(collectionRepository,serverAccountRepository,spaceMarineRepository);
+        return command.execute(collectionRepository,serverAccountRepository, personRepository);
     }
 }

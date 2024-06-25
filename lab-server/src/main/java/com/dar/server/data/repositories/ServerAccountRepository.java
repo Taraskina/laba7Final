@@ -33,18 +33,4 @@ public class ServerAccountRepository extends DBRepository<AccountEntity> {
         }
         return optionalServerAccount;
     }
-
-    /*@Transactional
-    @Override
-    public void add(AccountEntity serverAccount) {
-        jbdcServerAccountDao.save(serverAccount);
-    }
-
-    @Transactional
-    @Override
-    public void remove(AccountEntity serverAccount) {
-        jbdcServerAccountDao.delete(serverAccount);
-    }
-
-     */
 }
